@@ -1,0 +1,59 @@
+import csv
+import json
+
+# Define the names of the input and output files
+input_file = 'train.csv'
+output_file = 'output2.jsonl'
+
+# Define a dictionary that maps the old field names to the new ones
+field_mapping = {
+    'id': 'annotation_id',
+    'context': 'document_plaintext',
+    'question': 'question_text',
+    'answer_start': 'plaintext_start_byte'
+}
+
+# Open the input CSV file for reading and the output JSONL file for writing
+with open(input_file, 'r', encoding='utf-8') as csv_file, \
+     open(output_file, 'w', encoding='utf-8') as json_file:
+
+    # Read the CSV file using the DictReader class
+    csv_reader = csv.DictReader(csv_file)
+
+    # Iterate over each row in the CSV file
+    for row in csv_reader:
+
+        # Rename the fields using the field_mapping dictionary
+        new_row = {field_mapping.get(key, key): value for key, value in row.items()}
+
+        # Generate the JSONL format for the row
+        json_dict = {
+            'annotations': [
+                {
+                    'annotation_id': new_row.get('annotation_id', ''),
+                    'minimal_answer': {
+                        'plaintext_start_byte': new_row.get('plaintext_start_byte', ''),
+                        'plaintext_end_byte': new_row.get('plaintext_end_byte', '')
+                    },
+                    'passage_answer': {
+                        'candidate_index': new_row.get('candidate_index', '')
+                    },
+                    'yes_no_answer': new_row.get('yes_no_answer', '')
+                }
+            ],
+            'document_plaintext': new_row.get('document_plaintext', ''),
+            'document_title': new_row.get('document_title', ''),
+            'document_url': new_row.get('document_url', ''),
+            'example_id': new_row.get('example_id', ''),
+            'language': new_row.get('language', ''),
+            'passage_answer_candidates': [
+                {
+                    'plaintext_start_byte': new_row.get('plaintext_start_byte', ''),
+                    'plaintext_end_byte': new_row.get('plaintext_end_byte', '')
+                }
+            ],
+            'question_text': new_row.get('question_text', '')
+        }
+
+        # Write the row to the output JSONL file in JSON format
+        json_file.write(json.dumps(json_dict) + '\n')
