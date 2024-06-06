@@ -8,12 +8,9 @@ This repository contains the project code and documentation for "Overcoming Lang
 - [Related Work](#related-work)
 - [Methodology](#methodology)
 - [Datasets](#datasets)
-- [Installation](#installation)
-- [Usage](#usage)
 - [Results](#results)
 - [Future Work](#future-work)
 - [Contributors](#contributors)
-- [License](#license)
 
 ## Introduction
 In recent years, significant progress has been made in Natural Language Processing (NLP) tasks like question answering, thanks to advancements in large language models such as GPT-4. However, these models perform well primarily on high-resource languages like English and Chinese. For many regional languages, there is a lack of data and benchmarks, resulting in subpar performance on NLP tasks. This project seeks to bridge this gap by extending existing work in the question-answering domain to include more low-resource languages.
@@ -35,27 +32,6 @@ We utilize multiple datasets, including:
 - **chaii**: A dataset containing question-answer pairs in Hindi and Tamil.
 - **PQuAD**: A dataset with Persian question-answer pairs.
 
-## Installation
-Clone this repository and install the necessary dependencies:
-
-```bash
-git clone https://github.com/your-username/overcoming-language-barriers-qa.git
-cd overcoming-language-barriers-qa
-pip install -r requirements.txt
-```
-
-## Usage
-To train and evaluate the models, use the following command:
-
-```bash
-python train.py --config config.yaml
-```
-
-You can also run evaluations on custom datasets:
-
-```bash
-python evaluate.py --data_path path/to/data
-```
 
 ## Results
 Our experiments show significant improvements over baseline models, particularly for low-resource languages. Detailed results are available in the `results/` directory, showcasing performance metrics such as F1 scores, precision, and recall for each language.
